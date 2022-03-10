@@ -1,4 +1,4 @@
-*.gitignore
 *.o
 *.out
+*.hi
 *.errors
