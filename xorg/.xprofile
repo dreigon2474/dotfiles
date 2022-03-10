@@ -1,0 +1,18 @@
+# This is the x11 profile file
+# This contains all the hooks for when an x11
+# instance is started
+
+# Keyboard layout
+setxkbmap gb &
+
+# load nvidia-settings on boot
+nvidia-settings --load-config-only
+
+# Wallpaper
+nitrogen --restore
+
+# Cursor
+xsetroot -cursor_name left_ptr &
+
+# Compositor
+picom --experimental-backends --backend glx &
