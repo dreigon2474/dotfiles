@@ -1,0 +1,58 @@
+Config { 
+
+   -- appearance
+     font =         "xft:JetBrainsMono Nerd Font:size=10:bold:antialias=true"
+   , additionalFonts = [ "xft:Mononoki:pixelsize=11:antialias=true:hinting=true"
+                       , "xft:Font Awesome 6 Free Solid:pixelsize=12"
+		       , "xft:Font Awesome 6 Brands:pixelsize=12"
+		       ]
+
+   , bgColor =      "#141414"
+   , fgColor =      "#646464"
+   , position =     Top
+
+   -- layout
+   , sepChar =  "%"   -- delineator between plugin names and straight text
+   , alignSep = "}{"  -- separator between left-right alignment
+   , template = " <icon=haskell_20.xpm/> <fc=#666666>|</fc> %StdinReader% }{ <fc=#89aaff>%penguin% %kernel%</fc> <fc=#666666>|</fc> <fc=#f07178>%multicpu%</fc> <fc=#666666>|</fc> <fc=#ffcb6b>%memory%</fc> <fc=#666666>|</fc> <fc=#d0d0d0>%disku%</fc> <fc=#666666>|</fc> <fc=#ffffff>%date%</fc> "
+
+   -- general behavior
+   , lowerOnStart =     True    -- send to bottom of window stack on start
+   , hideOnStart =      False   -- start with window unmapped (hidden)
+   , allDesktops =      True    -- show on all desktops
+   , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+   , pickBroadest =     False   -- choose widest display (multi-monitor)
+   , persistent =       True    -- enable/disable hiding (True = disabled)
+   , iconRoot     = ".xmonad/xpm/"  -- default: "."
+   , commands = 
+
+        -- weather monitor
+        [ Run Weather "RJTT" [ "--template", "<skyCondition> | <fc=#4682B4><tempC></fc>°C | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa"
+                             ] 36000
+
+        -- network activity monitor (dynamic interface resolution)
+        , Run DynNetwork     [ "--template" , "<tx>kB/s|<rx>kB/s" ] 10
+
+        -- cpu activity monitor
+        , Run MultiCpu       [ "--template" , "<fn=2>\xf108</fn> cpu: <total>%" ] 10
+
+        -- Disk space free
+        , Run DiskU [("/", "<fn=2>\xf0c7</fn> ssd: <free> free")] [] 60
+
+        -- memory usage monitor
+        , Run Memory         [ "--template" ,"<fn=2>\xf233</fn> mem: <used>M (<usedratio>%)" ] 10
+
+        -- time and date indicator 
+        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
+        , Run Date           "<fn=2>\xf133</fn> %b %d %Y - <fn=2>\xf017</fn> %H:%M" "date" 10
+
+	-- Get penguin icon
+	, Run Com "echo" ["<fn=3>\xf17c</fn>"] "penguin" 3600
+
+        -- Get kernel version (script found in .local/bin)
+        , Run Com "uname" ["-r"] "kernel" 36000
+
+	-- read properties from 'xmonad.hs'
+	, Run StdinReader
+	]
+   }
