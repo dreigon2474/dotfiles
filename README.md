@@ -1,3 +1,5 @@
+![Dotfiles](images/icon.png?raw=true "Title")
+
 # Ayman's dotfiles
 This repository serves as a way to store my configuration files.
 
