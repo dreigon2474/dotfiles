@@ -1,4 +1,4 @@
-<img align="center" src="images/icon.png">
+<img align="center" src="images/dotfiles-logo.png">
 
 # Ayman's dotfiles
 This repository serves as a way to store my configuration files.
