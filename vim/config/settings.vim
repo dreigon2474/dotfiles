@@ -44,7 +44,7 @@ set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
 " Don't wrap lines
-set nowrap
+set wrap
 
 " Ignore case when searching
 set ignorecase

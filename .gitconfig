@@ -1,19 +1,23 @@
 [user]
 	email = ismaelayman159@gmail.com
-	name = dreigon2474
+	name = Ayman Ismael1
 
 [init]
     # The default branch is master
     defaultBranch = master
 
 [core]
-    # Set default editor is neovim
+    # Set default editor to neovim
     editor = nvim
     ignorecase = false
 
 [merge]
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
+
+[color]
+    # Enable color support
+    ui = true
 
 [pull]
     rebase = true
