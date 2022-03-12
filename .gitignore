@@ -1,3 +1,4 @@
+.zsh/.histfile
 *.o
 *.out
 *.hi
