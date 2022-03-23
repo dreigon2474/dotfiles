@@ -1,4 +1,4 @@
-Config { 
+Config {
 
    -- appearance
      font =         "xft:JetBrainsMono Nerd Font:size=10:bold:antialias=true"
@@ -14,7 +14,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = " <icon=haskell_20.xpm/> <fc=#666666>|</fc> %StdinReader% }{ <fc=#dd1f21>%penguin% %kernel%</fc> <fc=#666666>|</fc> <fc=#cc6666>%multicpu%</fc> <fc=#666666>|</fc> <fc=#b5bd68>%memory%</fc> <fc=#666666>|</fc> <fc=#e6c547>%disku%</fc> <fc=#666666>|</fc> <fc=#ebebeb>%date%</fc> "
+   , template = " <icon=haskell_20.xpm/> <fc=#666666>|</fc> %StdinReader% }{ <fc=#dd1f21>%penguin% %kernel%</fc> <fc=#666666>|</fc> <fc=#cc6666>%multicpu%</fc> <fc=#666666>|</fc> <fc=#b5bd68>%memory%</fc> <fc=#666666>|</fc> <fc=#e6c547>%disku%</fc> <fc=#666666>|</fc> <fc=#ebebeb>%date%</fc> <fc=#666666>|</fc> %traypad% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -24,7 +24,7 @@ Config {
    , pickBroadest =     False   -- choose widest display (multi-monitor)
    , persistent =       True    -- enable/disable hiding (True = disabled)
    , iconRoot     = ".xmonad/xpm/"  -- default: "."
-   , commands = 
+   , commands =
 
         -- weather monitor
         [ Run Weather "RJTT" [ "--template", "<skyCondition> | <fc=#4682B4><tempC></fc>°C | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa"
@@ -42,17 +42,21 @@ Config {
         -- memory usage monitor
         , Run Memory         [ "--template" ,"<fn=2>\xf233</fn> mem: <used>M (<usedratio>%)" ] 10
 
-        -- time and date indicator 
+        -- time and date indicator
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date           "<fn=2>\xf133</fn> %b %d %Y - <fn=2>\xf017</fn> %H:%M" "date" 10
 
-	-- Get penguin icon
-	, Run Com "echo" ["<fn=3>\xf17c</fn>"] "penguin" 3600
+	    -- Get penguin icon
+	    , Run Com "echo" ["<fn=3>\xf17c</fn>"] "penguin" 3600
 
         -- Get kernel version (script found in .local/bin)
         , Run Com "uname" ["-r"] "kernel" 36000
 
-	-- read properties from 'xmonad.hs'
-	, Run StdinReader
-	]
-   }
+    	-- read properties from 'xmonad.hs'
+	    , Run StdinReader
+
+        -- trayerpad
+       , Run Com "/home/sam/.config/xmonad/scripts/systraypad.sh" [] "traypad" 100
+
+    ]
+}

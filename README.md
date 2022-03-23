@@ -1,5 +1,3 @@
-<img align="center" src="images/preview.png">
-
 # Ayman's dotfiles
 This repository serves as a way to store my configuration files.
 
@@ -12,7 +10,7 @@ This contains my configuration files for my setup. You are free to copy any part
 ## Contents
 - [xmonad](https://github.com/xmonad/xmonad)
    - [xmonad-contrib](https://github.com/xmonad/xmonad-contrib)
-- [xmobar](https://github.com/jaor/xmobar)
+   - [xmobar](https://github.com/jaor/xmobar)
 - [picom](https://github.com/yshui/picom)
 - [xorg](https://gitlab.freedesktop.org/xorg/xserver)
 - [alacritty](https://github.com/alacritty/alacritty)

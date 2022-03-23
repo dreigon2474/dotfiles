@@ -15,25 +15,25 @@ import XMonad.Layout.Spacing
 import XMonad.Hooks.DynamicLog
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
+import XMonad.Util.SpawnOnce
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
-   -- ColorScheme module (SET ONLY ONE!)
-      -- Possible choice are:
-      -- DoomOne
-      -- Dracula
-      -- GruvboxDark
-      -- MonokaiPro
-      -- Nord
-      -- OceanicNext
-      -- Palenight
-      -- SolarizedDark
-      -- TomorrowNight
+-- ColorScheme module (SET ONLY ONE!)
+    -- Possible choice are:
+    -- DoomOne
+    -- Dracula
+    -- GruvboxDark
+    -- MonokaiPro
+    -- Nord
+    -- OceanicNext
+    -- Palenight
+    -- SolarizedDark
+    -- TomorrowNight
 import Colors.Dracula
 
 -- The preferred terminal program
---
 myTerminal = "alacritty"
 
 -- Whether focus follows the mouse pointer.
@@ -45,24 +45,19 @@ myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
 -- Width of the window border in pixels.
---
 myBorderWidth   = 1
 
 -- Set mod key to 'windows'
 myModMask       = mod4Mask
 
 -- Set workspaces
---
 myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
---
 myNormalBorderColor  = colorBack
 myFocusedBorderColor = color15
 
-------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
---
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
@@ -142,10 +137,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ]
     ++
 
-    --
     -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
-    --
     [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
@@ -153,14 +146,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-    --
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
---
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- mod-button1, Set the window to floating mode and move by dragging
@@ -177,17 +167,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-------------------------------------------------------------------------
--- Layouts:
-
--- You can specify and transform your layouts by modifying these values.
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
---
--- The available layouts.  Note that each layout is separated by |||,
--- which denotes layout choice.
---
+-- Layouts
 myLayout = avoidStruts (smartBorders tiled ||| Mirror tiled ||| noBorders Full)
   where
      -- default tiling algorithm partitions the screen into two panes
@@ -202,38 +182,21 @@ myLayout = avoidStruts (smartBorders tiled ||| Mirror tiled ||| noBorders Full)
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
-------------------------------------------------------------------------
 -- Window rules
---
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
-------------------------------------------------------------------------
 -- Event handling
-
--- * EwmhDesktops users should change this to ewmhDesktopsEventHook
---
--- Defines a custom handler function for X Events. The function should
--- return (All True) if the default handler is to be run afterwards. To
--- combine event hooks use mappend or mconcat from Data.Monoid.
---
 myEventHook = handleEventHook def <+> fullscreenEventHook
 
-------------------------------------------------------------------------
--- Status bars and logging
--- myLogHook = return ()
-------------------------------------------------------------------------
 -- Startup hook
 --
-myStartupHook = return ()
-------------------------------------------------------------------------
--- Now run xmonad with all the defaults we set up.
+myStartupHook = spawn ("trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --transparent true --tint 0x111111 --height 24")
 
--- Run xmonad with the settings you specify. No need to modify this.
---
+-- Run xmonad with the settings specified
 main = do
 	-- Spawn xmobar on all monitors
 	xmproc0 <- spawnPipe ("xmobar -x 0 /home/ayman/.config/xmobar/xmobar0/" ++ colorScheme ++ "-xmobarrc0")
@@ -263,7 +226,7 @@ main = do
         , manageHook         = myManageHook
         , handleEventHook    = myEventHook
         , logHook            = dynamicLogWithPP $ xmobarPP
-              -- XMOBAR SETTINGS
+              -- xmobar settings
               { ppOutput = \x -> hPutStrLn xmproc0 x   -- xmobar on monitor 1
                               >> hPutStrLn xmproc1 x   -- xmobar on monitor 2
                 -- Current workspace
@@ -287,4 +250,4 @@ main = do
               }
 
         , startupHook        = myStartupHook
-       }
+    }

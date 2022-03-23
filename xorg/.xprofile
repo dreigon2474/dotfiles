@@ -14,5 +14,7 @@ nitrogen --restore
 # Cursor
 xsetroot -cursor_name left_ptr &
 
+#trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --transparent true --tint 0x000000 --height 24
+
 # Compositor
 picom --experimental-backends --backend glx &
